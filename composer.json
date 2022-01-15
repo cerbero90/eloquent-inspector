@@ -1,11 +1,13 @@
 {
-    "name": "cerbero/:package_name",
+    "name": "cerbero/eloquent-inspector",
     "type": "library",
-    "description": ":package_description",
+    "description": "Inspect Laravel Eloquent models to collect properties, relationships and more.",
     "keywords": [
-        "laravel"
+        "laravel",
+        "eloquent",
+        "model"
     ],
-    "homepage": "https://github.com/cerbero90/:package_name",
+    "homepage": "https://github.com/cerbero90/eloquent-inspector",
     "license": "MIT",
     "authors": [{
         "name": "Andrea Marco Sartori",
@@ -14,37 +16,34 @@
         "role": "Developer"
     }],
     "require": {
-        "php": "^7.1||^8.0",
-        "illuminate/support": ">=5.5"
+        "php": "^8.0",
+        "doctrine/dbal": "^3.0||^4.0",
+        "illuminate/database": ">=8.0"
     },
     "require-dev": {
-        "orchestra/testbench": ">=3.5",
-        "phpunit/phpunit": ">=7.0",
+        "orchestra/testbench": ">=6.0",
+        "pestphp/pest": "^1.21",
+        "scrutinizer/ocular": "^1.8",
         "squizlabs/php_codesniffer": "^3.0"
     },
     "autoload": {
         "psr-4": {
-            "Cerbero\\:package_ns\\": "src"
+            "Cerbero\\EloquentInspector\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Cerbero\\:package_ns\\": "tests"
+            "Cerbero\\EloquentInspector\\": "tests"
         }
     },
     "scripts": {
-        "test": "phpunit",
+        "test": "pest",
         "check-style": "phpcs --standard=PSR12 src",
         "fix-style": "phpcbf --standard=PSR12 src"
     },
     "extra": {
         "branch-alias": {
             "dev-master": "1.0-dev"
-        },
-        "laravel": {
-            "providers": [
-                "Cerbero\\:package_ns\\Providers\\:package_nsServiceProvider"
-            ]
         }
     },
     "config": {
