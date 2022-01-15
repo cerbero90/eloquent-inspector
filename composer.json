@@ -1,11 +1,11 @@
 {
-    "name": "cerbero/:package_name",
+    "name": "cerbero/eloquent-inspector",
     "type": "library",
-    "description": ":package_description",
+    "description": "Inspect Laravel Eloquent models to collect properties, relationships and more.",
     "keywords": [
         "laravel"
     ],
-    "homepage": "https://github.com/cerbero90/:package_name",
+    "homepage": "https://github.com/cerbero90/eloquent-inspector",
     "license": "MIT",
     "authors": [{
         "name": "Andrea Marco Sartori",
@@ -24,12 +24,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Cerbero\\:package_ns\\": "src"
+            "Cerbero\\EloquentInspector\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Cerbero\\:package_ns\\": "tests"
+            "Cerbero\\EloquentInspector\\": "tests"
         }
     },
     "scripts": {
@@ -43,7 +43,7 @@
         },
         "laravel": {
             "providers": [
-                "Cerbero\\:package_ns\\Providers\\:package_nsServiceProvider"
+                "Cerbero\\EloquentInspector\\Providers\\EloquentInspectorServiceProvider"
             ]
         }
     },
