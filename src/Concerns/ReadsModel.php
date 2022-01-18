@@ -27,9 +27,7 @@ trait ReadsModel
             yield $line;
         }
 
-        // @codeCoverageIgnoreStart
         fclose($handle);
-        // @codeCoverageIgnoreEnd
     }
 
     /**
