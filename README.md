@@ -25,8 +25,92 @@ composer require cerbero/eloquent-inspector
 
 ## Usage
 
+To inspect an Eloquent model, we can simply pass its class name to the `inspect()` method:
+
 ```php
-// @todo Write documentation
+use App\Models\User;
+use Cerbero\EloquentInspector\Inspector;
+
+$inspector = Inspector::inspect(User::class);
+```
+
+An `Inspector` singleton is created every time a new model is inspected, this lets us inspect the same model multiple times while running the inspection logic only once.
+
+If we need to free memory or cleanup some inspected model information, we can either flush all model inspections, flush only one model inspection or tell an inspection to forget its data:
+
+```php
+// flush information of all inspected models
+Inspector::flush();
+
+// flush information of an inspected model
+Inspector::flush(User::class);
+
+// forget information of the current inspection
+Inspector::inspect(User::class)->forget();
+```
+
+To retrieve the class of the inspected model from an `Inspector`, we can call `getModel()`:
+
+```php
+$model = Inspector::inspect(User::class)->getModel(); // App\Models\User
+```
+
+The method `getUseStatements()` returns an array with all the `use` statements of a model, keyed by either the class name or the alias:
+
+```php
+use Illuminate\Database\Eloquent\Model;
+use Foo\Bar as Baz;
+
+class User extends Model
+{
+    // ...
+}
+
+$useStatements = Inspector::inspect(User::class)->getUseStatements();
+/*
+[
+    'Model' => 'Illuminate\Database\Eloquent\Model',
+    'Baz' => 'Foo\Bar',
+]
+*/
+```
+
+Calling `getProperties()` performs a scan of the model database table and returns an array of `Property` instances containing the properties information. The array is keyed by the properties name:
+
+```php
+$properties = Inspector::inspect(User::class)->getProperties();
+/*
+[
+    'id' => <Cerbero\EloquentInspector\Dtos\Property>,
+    'name' => <Cerbero\EloquentInspector\Dtos\Property>,
+    ...
+]
+*/
+
+$properties['id']->name; // id
+$properties['id']->type; // int
+$properties['id']->dbType; // integer
+$properties['id']->nullable; // false
+$properties['id']->default; // null
+```
+
+To inspect the relationships of a model, we can call the method `getRelationships()`. The result is an array of `Relationship` instances, keyed by the relationship name, containing all the relationships information:
+
+```php
+$relationships = Inspector::inspect(User::class)->getRelationships();
+/*
+[
+    'posts' => <Cerbero\EloquentInspector\Dtos\Relationship>,
+    'tags' => <Cerbero\EloquentInspector\Dtos\Relationship>,
+    ...
+]
+*/
+
+$relationships['posts']->name; // posts
+$relationships['posts']->type; // hasMany
+$relationships['posts']->class; // Illuminate\Database\Eloquent\Relations\HasMany
+$relationships['posts']->model; // App\Models\Post
+$relationships['posts']->relatesToMany; // true
 ```
 
 ## Change log
